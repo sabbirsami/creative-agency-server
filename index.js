@@ -19,7 +19,6 @@ async function run() {
     try {
         await client.connect();
         const userCollection = client.db("creativeAgency").collection("users");
-        console.log("Here");
     } finally {
     }
 }
