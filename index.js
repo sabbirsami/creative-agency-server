@@ -19,6 +19,14 @@ async function run() {
     try {
         await client.connect();
         const userCollection = client.db("creativeAgency").collection("users");
+        const serviceCollection = client
+            .db("creativeAgency")
+            .collection("services");
+
+        app.get("/services", async (req, res) => {
+            const service = await serviceCollection.find().toArray();
+            res.send(service);
+        });
     } finally {
     }
 }
