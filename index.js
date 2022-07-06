@@ -19,6 +19,9 @@ async function run() {
     try {
         await client.connect();
         const userCollection = client.db("creativeAgency").collection("users");
+        const orderCollection = client
+            .db("creativeAgency")
+            .collection("orders");
         const serviceCollection = client
             .db("creativeAgency")
             .collection("services");
@@ -34,6 +37,16 @@ async function run() {
                 .find({ _id: ObjectId(id) })
                 .toArray();
             res.send(result);
+        });
+
+        app.post("/orders", async (req, res) => {
+            const orders = req.body;
+            const result = await orderCollection.insertOne(orders);
+            res.send(result);
+        });
+        app.get("/orders", async (req, res) => {
+            const orders = await orderCollection.find().toArray();
+            res.send(orders);
         });
     } finally {
     }
