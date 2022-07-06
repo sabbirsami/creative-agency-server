@@ -3,7 +3,7 @@ const app = express();
 const cors = require("cors");
 require("dotenv").config();
 const port = process.env.PORT || 5000;
-const { MongoClient, ServerApiVersion } = require("mongodb");
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.up3hj.mongodb.net/?retryWrites=true&w=majority`;
 
 app.use(cors());
@@ -26,6 +26,14 @@ async function run() {
         app.get("/services", async (req, res) => {
             const service = await serviceCollection.find().toArray();
             res.send(service);
+        });
+
+        app.get("/services/:id", async (req, res) => {
+            const id = req.params.id;
+            const result = await serviceCollection
+                .find({ _id: ObjectId(id) })
+                .toArray();
+            res.send(result);
         });
     } finally {
     }
