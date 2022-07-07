@@ -48,6 +48,12 @@ async function run() {
             const orders = await orderCollection.find().toArray();
             res.send(orders);
         });
+        app.get("/order", async (req, res) => {
+            const userEmail = req.query.email;
+            const query = { userEmail: userEmail };
+            const orders = await orderCollection.find(query).toArray();
+            res.send(orders);
+        });
 
         app.get("/users", async (req, res) => {
             const user = await userCollection.find().toArray();
