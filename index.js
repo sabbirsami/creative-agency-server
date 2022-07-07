@@ -19,6 +19,9 @@ async function run() {
     try {
         await client.connect();
         const userCollection = client.db("creativeAgency").collection("users");
+        const reviewCollection = client
+            .db("creativeAgency")
+            .collection("reviews");
         const orderCollection = client
             .db("creativeAgency")
             .collection("orders");
@@ -90,9 +93,14 @@ async function run() {
         });
         app.get("/users/:email", async (req, res) => {
             const email = req.params.email;
-            console.log(email);
             const user = await userCollection.findOne({ email: email });
             res.send(user);
+        });
+
+        app.post("/reviews", async (req, res) => {
+            const review = req.body;
+            const result = await reviewCollection.insertOne(review);
+            res.send(result);
         });
     } finally {
     }
