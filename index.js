@@ -48,6 +48,27 @@ async function run() {
             const orders = await orderCollection.find().toArray();
             res.send(orders);
         });
+
+        app.get("/users", async (req, res) => {
+            const user = await userCollection.find().toArray();
+            res.send(user);
+        });
+        app.put("/users/:email", async (req, res) => {
+            const email = req.params.email;
+            const userInformation = req.body;
+            const filter = { email: email };
+            const option = { upsert: true };
+            const updateDoc = {
+                $set: userInformation,
+            };
+            const result = await userCollection.updateOne(
+                filter,
+                updateDoc,
+                option
+            );
+
+            res.send({ result });
+        });
     } finally {
     }
 }
