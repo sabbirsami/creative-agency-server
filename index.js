@@ -30,12 +30,18 @@ async function run() {
             const service = await serviceCollection.find().toArray();
             res.send(service);
         });
-
         app.get("/services/:id", async (req, res) => {
             const id = req.params.id;
             const result = await serviceCollection
                 .find({ _id: ObjectId(id) })
                 .toArray();
+            res.send(result);
+        });
+        app.delete("/services/:id", async (req, res) => {
+            const id = req.params.id;
+            const result = await serviceCollection.deleteOne({
+                _id: ObjectId(id),
+            });
             res.send(result);
         });
 
