@@ -90,9 +90,9 @@ async function run() {
         });
         app.get("/users/:email", async (req, res) => {
             const email = req.params.email;
-            const filter = { email: email };
-            const result = await userCollection.find(filter).toArray();
-            res.send(result);
+            console.log(email);
+            const user = await userCollection.findOne({ email: email });
+            res.send(user);
         });
     } finally {
     }
