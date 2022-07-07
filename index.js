@@ -71,6 +71,7 @@ async function run() {
             res.send(result);
         });
 
+        //USER API
         app.get("/users", async (req, res) => {
             const user = await userCollection.find().toArray();
             res.send(user);
@@ -97,6 +98,7 @@ async function run() {
             res.send(user);
         });
 
+        //REVIEW API
         app.post("/reviews", async (req, res) => {
             const review = req.body;
             const result = await reviewCollection.insertOne(review);
